@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace LinqAndLambda
@@ -24,33 +23,62 @@ namespace LinqAndLambda
                 new Person("Maria", 174, 66, Person.Gender.Female),
             };
             int[] numbers = { 2, 4, 7, 2, 6, 42, 9, 11, 23, -34, -2, -33, 123, 23, 72, 99 };
-            object[] mix = { 5, "string", 'd', new List<int>() { 1, 2, 3 }, "test", 17, 5, 3, 6};
+            object[] mix = { 5, "string", 'd', new List<int>() { 1, 2, 3 }, "test", 17, 5, 3, 6 };
 
 
 
             //
-            // Lambda Expressions
+            // ################################################# Lambda Expressions #################################################
             //
-            var oddNumbers = from number in numbers
-                             where number % 2 == 1
-                             select number;
-            var oddNumbers2 = numbers.Where(n => n % 3 == 0).ToList();
-            Console.WriteLine(string.Join(", ", oddNumbers));
-            oddNumbers2.ForEach(Console.WriteLine);
-
-            var averageNameLength = catNames.Average(i => i.Length);
-            var namesCount = catNames.Count();
-            var namesLenght = catNames.Sum(n => n.Length);
-            Console.WriteLine($"Average number: {averageNameLength} ({namesCount} names with Sum-Length {namesLenght})");
-
-            // Filter from mixed types-collection
-            var allIntegers = mix.OfType<int>().Where(i => i < 7).OrderByDescending(i => i);
-            allIntegers.ToList().ForEach(i => Console.Write(i + ", "));
 
 
+            //
+            // Example 4
+            // 
+            // Difference between "Select" and "Where"
+            List<Warrior> warriors = new List<Warrior>
+            {
+                new Warrior() {Height = 100},
+                new Warrior() {Height = 80},
+                new Warrior() {Height = 90},
+                new Warrior() {Height = 120},
+            };
+
+            var shortWarriorsWhere = warriors.Where(i => i.Height < 100);
+            var shortWarriorsSelect = warriors.Where(i => i.Height < 100).Select(i => i.Height);    // Select extract collection form cother collection
+
+
+            shortWarriorsWhere.ToList().ForEach(i => System.Console.WriteLine(i));
+
+
+
+            //
+            // Example 3
+            //var oddNumbers = from number in numbers
+            //                 where number % 2 == 1
+            //                 select number;
+            //var oddNumbers2 = numbers.Where(n => n % 3 == 0).ToList();
+            //Console.WriteLine(string.Join(", ", oddNumbers));
+            //oddNumbers2.ForEach(Console.WriteLine);
+
+            //var averageNameLength = catNames.Average(i => i.Length);
+            //var namesCount = catNames.Count();
+            //var namesLenght = catNames.Sum(n => n.Length);
+            //Console.WriteLine($"Average number: {averageNameLength} ({namesCount} names with Sum-Length {namesLenght})");
+
+            //// Filter from mixed types-collection
+            //var allIntegers = mix.OfType<int>().Where(i => i < 7).OrderByDescending(i => i);
+            //allIntegers.ToList().ForEach(i => Console.Write(i + ", "));
+
+
+
+
+
+
+            //
+            // ################################################# LINQ  ##############################################################
             //
             // LINQ used on Objects
-            //
             //var fourCharPeople = from p in people
             //                     where (p.Name.Length == 4)
             //                     orderby p.Name descending, p.Weight ascending
@@ -103,6 +131,13 @@ namespace LinqAndLambda
 
 
         }
+
+        // Function that turns string into int-array
+        private static int[] StringToIntArray(string input)
+        {
+            return input.Split().Select(element => int.Parse(element)).ToArray();
+        }
+
     }
 
     internal class Person
@@ -151,5 +186,10 @@ namespace LinqAndLambda
             Female,
             Div
         }
+    }
+
+    internal class Warrior
+    {
+        public int Height { get; set; }
     }
 }
