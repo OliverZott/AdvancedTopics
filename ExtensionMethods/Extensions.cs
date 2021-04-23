@@ -1,9 +1,26 @@
 ﻿using System;
+using System.Drawing;
 
 namespace ExtensionMethods
 {
     public static class Extensions
     {
+
+
+        // Extension for Point Object
+        public static Distance DistanceTo(this Point p1, Point p2)
+        {
+
+            int xDist = p2.X - p1.X;
+            int yDist = p2.Y - p1.Y;
+            Console.WriteLine($"Distance between the points is: " + 
+                $"\n{xDist} in x-direction" + 
+                $"\n{yDist} in y-direction");
+
+            return new Distance() { XDistance = xDist, YDistance = yDist } ;
+        }
+
+
 
         /// <summary>
         /// Sorting array with custom bubble-sort implementation
