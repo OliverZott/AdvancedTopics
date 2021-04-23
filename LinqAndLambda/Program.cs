@@ -24,20 +24,40 @@ namespace LinqAndLambda
                 new Person("Maria", 174, 66, Person.Gender.Female),
             };
             int[] numbers = { 2, 4, 7, 2, 6, 42, 9, 11, 23, -34, -2, -33, 123, 23, 72, 99 };
+            object[] mix = { 5, "string", 'd', new List<int>() { 1, 2, 3 }, "test", 17, 5, 3, 6};
 
 
+
+            //
+            // Lambda Expressions
+            //
+            var oddNumbers = from number in numbers
+                             where number % 2 == 1
+                             select number;
+            var oddNumbers2 = numbers.Where(n => n % 3 == 0).ToList();
+            Console.WriteLine(string.Join(", ", oddNumbers));
+            oddNumbers2.ForEach(Console.WriteLine);
+
+            var averageNameLength = catNames.Average(i => i.Length);
+            var namesCount = catNames.Count();
+            var namesLenght = catNames.Sum(n => n.Length);
+            Console.WriteLine($"Average number: {averageNameLength} ({namesCount} names with Sum-Length {namesLenght})");
+
+            // Filter from mixed types-collection
+            var allIntegers = mix.OfType<int>().Where(i => i < 7).OrderByDescending(i => i);
+            allIntegers.ToList().ForEach(i => Console.Write(i + ", "));
 
 
             //
             // LINQ used on Objects
             //
-            var fourCharPeople = from p in people
-                                 where (p.Name.Length == 4)
-                                 orderby p.Name descending, p.Weight ascending
-                                 select p;
+            //var fourCharPeople = from p in people
+            //                     where (p.Name.Length == 4)
+            //                     orderby p.Name descending, p.Weight ascending
+            //                     select p;
 
-            var fourCharPeopleList = fourCharPeople.ToList();
-            fourCharPeople.ToList().ForEach(p => Console.WriteLine($"{p.Name} weights {p.Weight}"));
+            //var fourCharPeopleList = fourCharPeople.ToList();
+            //fourCharPeople.ToList().ForEach(p => Console.WriteLine($"{p.Name} weights {p.Weight}"));
 
 
             //
