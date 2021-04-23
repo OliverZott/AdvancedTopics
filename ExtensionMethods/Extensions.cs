@@ -1,7 +1,14 @@
-﻿namespace ExtensionMethods
+﻿using System;
+
+namespace ExtensionMethods
 {
     public static class Extensions
     {
+
+        /// <summary>
+        /// Sorting array with custom bubble-sort implementation
+        /// </summary>
+        /// <param name="array"></param>
         public static void Sort(this int[] array)
         {
             int temp = 0;
@@ -18,8 +25,29 @@
                     }
                 }
             }
+
         }
 
+        /// <summary>
+        /// Sorting array with custom bubble-sort implementation and optional reversing
+        /// </summary>
+        /// <param name="array"></param>
+        /// <param name="reverse">Optional parameter for descending order</param>
+        public static void Sort(this int[] array, bool reverse = false)
+        {
 
+            array.Sort();
+
+            if (reverse)
+            {
+                Array.Reverse(array);
+            }
+
+        }
+
+        public static void Reverse(this int[] array)
+        {
+            Array.Reverse(array);
+        }
     }
 }
