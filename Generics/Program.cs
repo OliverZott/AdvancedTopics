@@ -8,23 +8,47 @@ namespace Generics
         {
 
             //
+            // -------------------- 19. Example 3 - Generic Class  --------------------
+            //
+            //*
+            MyList<int> listOne = new();
+            listOne.Add(12);
+            listOne.Add(3);
+            listOne.Add(42);
+            foreach (int ele in listOne)
+            {
+                Console.WriteLine(ele);
+            }
+
+            for (int i = 0; i < listOne.Count; i++)
+            {
+                var backwardsCount = listOne.Count - 1 - i;
+                var item = listOne[listOne.Count - 1 - i];
+                Console.WriteLine(listOne[listOne.Count - 1 - i]);
+            }
+
+
+            //
+            // -------------------- 18. Example 3 - Object specific generics  --------------------
+            //
+            /*
+            Person p1 = new Person { Age = 27 };
+            Person p2 = new() { Age = 27 };
+            Console.WriteLine(AreEqual(p1, p2));
+            Console.WriteLine(p1.CompareTo(p2));
+            //*/
+
+
+            //
             // -------------------- 17. Example 2 - Sorting collections --------------------
             //
+            /*
             int[] intArray = { 2, 5, 8, 1, 2, 42, 9, 46, 9, 12, 34, 62, 79, 45, 62, 0 };
             string[] strArray = { "aabc", "abba", "baac", "babc", "abac" };
 
             var sortedArray = MySort(strArray);
             System.Console.WriteLine(string.Join(", ", sortedArray));
-
-
-
-
-
-
-
-
-
-
+            //*/
 
 
 
@@ -35,7 +59,7 @@ namespace Generics
             Console.WriteLine($"{AreEqual("a", "a")}");
             Console.WriteLine($"{AreEqual(1, 1)}");
             Console.WriteLine($"{AreEqual(true, true)}");
-            */
+            //*/
         }
 
 
@@ -43,7 +67,7 @@ namespace Generics
         //
         // -------------------- 17. Example 2 - Sorting collections --------------------
         //
-        public static T[] MySort<T>(T[] array) where T : IComparable
+        public static T[] MySort<T>(T[] array) where T : IComparable<T>
         {
             for (int i = 0; i < array.Length; i++)
             {
@@ -65,13 +89,10 @@ namespace Generics
 
 
 
-
-
-
         //
         // -------------------- 16. Example 1 - Simple method --------------------
         //
-        /*
+        //*
         public static bool AreEqual0(object obj1, object obj2)
         {
             return obj1 == obj2;
@@ -81,10 +102,10 @@ namespace Generics
             return num1.Equals(num2);
         }
         // more "specific" generic method
-        public static bool AreEqual<T>(T num1, T num2) where T : IComparable
+        public static bool AreEqual<T>(T num1, T num2) where T : IComparable<T>
         {
             return num1.CompareTo(num2) == 0;
         }
-        */
+        //*/
     }
 }
