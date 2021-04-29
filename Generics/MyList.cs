@@ -76,18 +76,32 @@ namespace Generics
         }
 
 
-        //public IEnumerator<T> GetEnumerator()
-        //{
-        //    foreach (var item in items)
-        //    {
-        //        yield return item;
-        //    }
-        //}
+        // Operator overloading
+        // Problem: no generic constraint taht allows operator overloading
+        //      https://stackoverflow.com/questions/8122611/c-sharp-adding-two-generic-values
+        // Solution: "dynamic" keyword
+        //      what about type-safety ?? (doesn't apply any compile time safety which is what generics are meant)
+        //      -> only way for compile time safety is generic constraints!
+        // 
+        //
+        public static MyList<T> operator +(MyList<T> myList1, MyList<T> myList2)
+        {
+            MyList<T> result = new();
 
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return this.GetEnumerator();
-        //}
+            if (myList1.count != myList2.count)
+            {
+                throw new InvalidOperationException("Lists have to be of the same size!");
+            }
+            else
+            {
+                for (int i = 0; i < myList1.count; i++)
+                {
+                    result.Add((dynamic)myList1[i] + (dynamic)myList2[i]);      //dynamic
+                }
+            }
+
+            return result;
+        }
 
 
         #region strongly typed version (https://stackoverflow.com/questions/11296810/how-do-i-implement-ienumerablet)

@@ -8,9 +8,21 @@ namespace Generics
         {
 
             //
+            // -------------------- 20.+21. Example 4 - Operator Overloading & Indexer  --------------------
+            //
+            MyList<int> list1 = new() { 2, 3, 5, 8 };
+            MyList<int> list2 = new() { 1, 1, 1, 1 };
+            MyList<int> list3 = list1 + list2;
+            foreach (int ele in list3)
+            {
+                Console.WriteLine(ele);
+            }
+
+
+            //
             // -------------------- 19. Example 3 - Generic Class  --------------------
             //
-            //*
+            /*
             MyList<int> listOne = new();
             listOne.Add(12);
             listOne.Add(3);
@@ -24,8 +36,9 @@ namespace Generics
             {
                 var backwardsCount = listOne.Count - 1 - i;
                 var item = listOne[listOne.Count - 1 - i];
-                Console.WriteLine(listOne[listOne.Count - 1 - i]);
+                Console.WriteLine(item);
             }
+            //*/
 
 
             //
