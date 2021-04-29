@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LinqAndLambda
@@ -8,7 +9,6 @@ namespace LinqAndLambda
         static void Main(string[] args)
         {
 
-            string sentence = "I love cats.";
             string[] catNames = { "Kosto", "Garfield", "Bob", "John", "Hamsi", "Hamsterblaster" };
             List<Person> people = new List<Person>()
             {
@@ -24,12 +24,25 @@ namespace LinqAndLambda
             };
             int[] numbers = { 2, 4, 7, 2, 6, 42, 9, 11, 23, -34, -2, -33, 123, 23, 72, 99 };
             object[] mix = { 5, "string", 'd', new List<int>() { 1, 2, 3 }, "test", 17, 5, 3, 6 };
+            String[] names = { "Alice", "Bob", "Siggi", "Magdalena", "Oliver", "Lissi", "Todd", "Al" };
 
 
 
             //
             // ################################################# Lambda Expressions #################################################
             //
+
+
+
+            //
+            // Example 5 - Why not List<>?
+            // 
+            // Even if ToList() is after Oder... the type is still IEnumerable instead of Generic.List<>
+            //List<string> namesBiggerFive = names.OrderByDescending(i => i.Length).ToList().Where(i => i.Length < 5);
+            var namesBiggerFive = names.OrderByDescending(i => i.Length).ToList().Where(i => i.Length < 5);
+            //namesBiggerFive.ForEach(i => Console.WriteLine($"Length: {i.Length} - {i}"));
+            namesBiggerFive.ToList().ForEach(i => Console.WriteLine($"Length: {i.Length} - {i}"));
+
 
 
             //
