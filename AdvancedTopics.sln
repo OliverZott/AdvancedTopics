@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqAndLambda", "LinqAndLambda\LinqAndLambda.csproj", "{BDD84C73-ACF7-4929-A37D-EC7EEBA0D906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{A529F591-B302-43EE-A35E-051D84942801}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtensionMethods", "ExtensionMethods\ExtensionMethods.csproj", "{A529F591-B302-43EE-A35E-051D84942801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generics", "Generics\Generics.csproj", "{9F66FA8E-CAA9-42FD-9EC9-946B3175AFE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generics", "Generics\Generics.csproj", "{9F66FA8E-CAA9-42FD-9EC9-946B3175AFE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delegates", "Delegates\Delegates.csproj", "{1D91E473-5341-4144-A4D8-36621E69B773}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9F66FA8E-CAA9-42FD-9EC9-946B3175AFE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F66FA8E-CAA9-42FD-9EC9-946B3175AFE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F66FA8E-CAA9-42FD-9EC9-946B3175AFE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D91E473-5341-4144-A4D8-36621E69B773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D91E473-5341-4144-A4D8-36621E69B773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D91E473-5341-4144-A4D8-36621E69B773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D91E473-5341-4144-A4D8-36621E69B773}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
