@@ -9,6 +9,7 @@ namespace Delegates
 
         public delegate bool Filters(string item);
         public delegate void Printer(string message);
+        public delegate int CheckLength(string message);
 
 
         static void Main()
@@ -31,20 +32,30 @@ namespace Delegates
             filter += equalsFive;
             //Console.WriteLine(filter("TestWord"));  
 
-            // Only last method returned by delegate ... to get all delegate-methods:
-            List<bool> lengthFilterResult = new();
+            List<bool> results0 = new();
             foreach (var del in filter.GetInvocationList())
             {
                 var result = del.DynamicInvoke("TestWord");
-                lengthFilterResult.Add((bool)result);
+                results0.Add((bool)result);
                 //Console.WriteLine(result);
             }
 
-            // get all delegate methods easier with Lambda Expressions
-            List<bool> results = filter.GetInvocationList().Select(del => (bool)del.DynamicInvoke("TestWord")).ToList();
-            Console.WriteLine(String.Join(", ", results));
+            List<bool> results1 = filter.GetInvocationList().Select(del => (bool)del.DynamicInvoke("TestWord")).ToList();
+            //Console.WriteLine(String.Join(", ", results1));
 
+            // Use Method to get all return values from delegate-methods
+            List<bool> filterResults = GetAllResults<bool>(filter, "TestWord");
+            filterResults.ForEach(i => Console.WriteLine(i));
+
+            CheckLength checkLength = x => x.Length;
+            checkLength += x => x.Length + 1;
+            checkLength += x => x.Length + 2;
+            List<int> lengthResults = GetAllResults<int>(checkLength, "TestWord");
+            lengthResults.ForEach(i => Console.WriteLine(i));
             #endregion
+
+
+
 
             #region Example 2
             Console.WriteLine("\n" + separator + " Example 2 " + separator);
@@ -73,6 +84,14 @@ namespace Delegates
 
 
         #region Example 1 - Simple Delegate implementation with methods and chaining 
+        // Method to fetch all return values of delegate-methods
+        public static List<T> GetAllResults<T>(Delegate del, object parameter = null)
+        {
+            List<T> result = del.GetInvocationList()
+                                .Select(d => (T)d.DynamicInvoke(parameter))
+                                .ToList();
+            return result;
+        }
         // Filter methods used as delegate
         public static bool lessThanFive(string input)
         {
@@ -104,6 +123,9 @@ namespace Delegates
             return result;
         }
         #endregion
+
+
+
 
         #region Example 2 - Chaining delegates (methods)
         public static void Print(string message)
