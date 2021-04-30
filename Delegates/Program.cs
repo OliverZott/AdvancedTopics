@@ -12,12 +12,13 @@ namespace Delegates
 
         static void Main()
         {
-            String[] names = { "Alice", "Bob", "Siggi", "Magdalena", "Oliver", "Lissi", "Todd", "Al" };
+            String[] names = { "Alice", "Bob", "Siggi", "Magdalena", "Oliver", "Lissi", "Todd", "Al" , "Petra", "Alex"};
 
             List<string> resultList = NamesLengthFilter(names, equalsFive);
-
+            List<string> resultList2 = NamesLengthFilter(names, item => item.Length == 4);      // Use Lambda expression instead of methods
+                
             // methods for filtering can be used as variables in method arguments
-            resultList.OrderBy(i => i.Length).ToList().ForEach(i => Console.WriteLine($"Length: {i.Length} - {i}"));
+            resultList2.OrderBy(i => i.Length).ToList().ForEach(i => Console.WriteLine($"Length: {i.Length} - {i}"));
         }
 
 
