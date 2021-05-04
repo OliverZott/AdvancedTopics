@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Channels;
 
 namespace Delegates
 {
-    class Program
+    public class Program
     {
 
         public delegate bool Filters(string item);
@@ -12,24 +13,35 @@ namespace Delegates
         public delegate int CheckLength(string message);
 
 
-        static void Main()
+        public static void Main()
         {
+            var separator = new string('-', 30);
 
-            string separator = new String('-', 30);
 
             #region Example 1
             Console.WriteLine("\n" + separator + " Example 1 " + separator);
-            String[] names = { "Alice", "Bob", "Siggi", "Magdalena", "Oliver", "Lissi", "Todd", "Al", "Petra", "Alex" };
+            string[] names = { "Alice", "Bob", "Siggi", "Magdalena", "Oliver", "Lisi", "Todd", "Al", "Petra", "Alex" };
 
-            // Use delegate as method argument: methods for filtering can be used as variable.
-            List<string> resultList = NamesLengthFilter(names, equalsFive);
+
+            Func<string, bool> lessThanFive = LessThanFive;
+            Func<string, bool> greaterThanSix = x => x.Length > 6;
+            Action<string> printer = PrintTwice;
+            printer += Print;
+
+            List<string> namesLessThanFive = ExtractStrings(names, greaterThanSix);
+            namesLessThanFive.ForEach(Console.WriteLine);
+
+            printer("message test!");
+            
+
+
+            List<string> resultList = NamesLengthFilter(names, EqualsFive);                                // Use delegate as method argument: methods for filtering can be used as variable.
             List<string> resultList2 = NamesLengthFilter(names, item => item.Length == 4);      // Use Lambda expression instead of methods
             //resultList2.OrderBy(i => i.Length).ToList().ForEach(i => Console.WriteLine($"Length: {i.Length} - {i}"));
 
-            // Declare and initialize delegate
-            Filters filter = lessThanFive;
-            filter += greateThanFive;
-            filter += equalsFive;
+            Filters filter = LessThanFive;
+            filter += GreaterThanFive;
+            filter += EqualsFive;
             //Console.WriteLine(filter("TestWord"));  
 
             List<bool> results0 = new();
@@ -40,18 +52,20 @@ namespace Delegates
                 //Console.WriteLine(result);
             }
 
-            List<bool> results1 = filter.GetInvocationList().Select(del => (bool)del.DynamicInvoke("TestWord")).ToList();
+            List<bool> results1 = filter.GetInvocationList()
+                .Select(del => (bool)del.DynamicInvoke("TestWord"))
+                .ToList();
             //Console.WriteLine(String.Join(", ", results1));
 
-            // Use Method to get all return values from delegate-methods
-            List<bool> filterResults = GetAllResults<bool>(filter, "TestWord");
+
+            var filterResults = GetAllDelegateResults<bool>(filter, "TestWord");
             filterResults.ForEach(i => Console.WriteLine(i));
 
             CheckLength checkLength = x => x.Length;
             checkLength += x => x.Length + 1;
             checkLength += x => x.Length + 2;
-            List<int> lengthResults = GetAllResults<int>(checkLength, "TestWord");
-            lengthResults.ForEach(i => Console.WriteLine(i));
+            List<int> lengthResults = GetAllDelegateResults<int>(checkLength, "TestWord");
+            lengthResults.ForEach(Console.WriteLine);   // method group instead of lambda
             #endregion
 
 
@@ -83,31 +97,37 @@ namespace Delegates
         }
 
 
-        #region Example 1 - Simple Delegate implementation with methods and chaining 
-        // Method to fetch all return values of delegate-methods
-        public static List<T> GetAllResults<T>(Delegate del, object parameter = null)
+        #region Example 1 - Simple Delegate implementation with methods and chaining
+
+        private static List<T> GetAllDelegateResults<T>(Delegate del, object parameter = null)
         {
             List<T> result = del.GetInvocationList()
                                 .Select(d => (T)d.DynamicInvoke(parameter))
                                 .ToList();
             return result;
         }
-        // Filter methods used as delegate
-        public static bool lessThanFive(string input)
+
+        private static bool LessThanFive(string input)
         {
             return input.Length < 5;
         }
-        public static bool greateThanFive(string input)
+
+        private static bool GreaterThanFive(string input)
         {
             return input.Length > 5;
         }
-        public static bool equalsFive(string input)
+
+        private static bool EqualsFive(string input)
         {
             return input.Length == 5;
         }
 
-        // Function to check for string length for items in a sting array
-        public static List<string> NamesLengthFilter(string[] names, Filters filter)
+        public static List<string> ExtractStrings(string[] strings, Func<string, bool> func)
+        {
+            return strings.Where(func).ToList();
+        }
+
+        private static List<string> NamesLengthFilter(string[] names, Filters filter)
         {
             List<string> result = new();
 
