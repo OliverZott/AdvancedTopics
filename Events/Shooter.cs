@@ -11,9 +11,9 @@ namespace Events
     {
         private readonly Random _rng = new();
 
-        public delegate void ShootEventHandler(object sender, ShotFiredEventArgs e);
+        //public delegate void ShootEventHandler(object sender, ShotFiredEventArgs e);
 
-        public event ShootEventHandler ShotFired;
+        public event EventHandler<ShotFiredEventArgs> ShotFired;
 
         public string Name { get; set; }
 

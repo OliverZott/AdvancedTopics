@@ -20,7 +20,7 @@ namespace Events
         }
 
         // methods which subscribes to event
-        private static void AddScore(object sender, EventArgs e)
+        private static void AddScore(object sender, ShotFiredEventArgs e)
         {
             _score++;
         }
